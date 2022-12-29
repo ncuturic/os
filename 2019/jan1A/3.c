@@ -72,12 +72,12 @@ int main()
         if(i==0)
         {
             max = *(float*)t;
-            idx = 1;
+            idx = tid[0];
         }
         else if(*(float*)t>max)
         {
             max=*(float*)t;
-            idx = i+1;
+            idx = tid[i];
         }
         free(t);
         free(data[i].vektori);
