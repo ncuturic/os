@@ -1,3 +1,4 @@
+//Radi samo 20%
 #include<stdio.h>
 #include<stdlib.h>
 #include<semaphore.h>

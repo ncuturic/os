@@ -1,3 +1,4 @@
+//Prolazi samo 30%
 #define _XOPEN_SOURCE 700
 #include<stdio.h>
 #include<stdlib.h>
@@ -31,11 +32,11 @@ int main(int argc, char* argv[])
     {
         check_error(write(fdDest, buff, MAX_BYTES)!=-1, "write");
     }
-    close(fdDest);
-    close(fdSrc);
-    free(buff);
     check_error(read_bytes!=-1, "read");
     check_error(chmod(argv[2], fileinfo.st_mode)!=-1, "chmod");
+    check_error(close(fdDest)!=-1, "close");
+    check_error(close(fdSrc)!=-1, "close");
     check_error(unlink(argv[1])!=-1, "unlink");
-    exit(EXIT_FAILURE);
+    free(buff);
+    exit(EXIT_SUCCESS);
 }

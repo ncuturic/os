@@ -17,7 +17,7 @@
 int main(int argc, char* argv[])
 {
     check_error(argc==4, "argumenti");
-    int prava = /*(argv[3][1] - '0')*64 + (argv[3][2] - '0')*8 + (argv[3][3] - '0')*/ strtol(argv[3], NULL, 8);
+    int prava = strtol(argv[3], NULL, 8);
     mode_t oldMask = umask(0);
     int uspeo = 0;
     if(strcmp(argv[1], "-f")==0)

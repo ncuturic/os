@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
         char* buff = (char*)malloc(MAX_BYTES);
         check_error(buff!=NULL, "malloc");
         ssize_t read_bytes = 0;
-        while(read_bytes = read(fd, buff, MAX_BYTES) > 0)
+        while((read_bytes = read(fd, buff, MAX_BYTES)) > 0)
         {
             check_error(write(STDOUT_FILENO, buff, MAX_BYTES)!=-1, "write");
         }
@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
         char* buff = (char*)malloc(MAX_BYTES);
         check_error(buff!=NULL, "malloc");
         ssize_t read_bytes = 0;
-        while(read_bytes = read(STDIN_FILENO, buff, MAX_BYTES) > 0)
+        while((read_bytes = read(STDIN_FILENO, buff, MAX_BYTES)) > 0)
         {
             check_error(write(fd, buff, MAX_BYTES)!=-1, "write");
         }

@@ -1,3 +1,4 @@
+//Prolazi samo 20%
 #define _XOPEN_SOURCE 700
 #define MAXS 1024
 #include<stdio.h>

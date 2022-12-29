@@ -1,6 +1,7 @@
+//Radi samo 20%
 #include<stdio.h>
 #include<stdlib.h>
-#include <sys/wait.h>
+#include<sys/wait.h>
 #include<unistd.h>
 #define RD_END 0
 #define WR_END 1

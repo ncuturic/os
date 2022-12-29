@@ -23,10 +23,7 @@ int main(int argc, char* argv[])
     check_error(signal(SIGUSR2, sighandler)!=SIG_ERR, "signal");
     check_error(signal(SIGINT, sighandler)!=SIG_ERR, "signal");
     check_error(signal(SIGTERM, sighandler)!=SIG_ERR, "signal");
-    while(!term)
-    {
-        pause();
-    }
+    while(!term)pause();
     printf("%d\n", skor);
     exit(EXIT_SUCCESS);
 }

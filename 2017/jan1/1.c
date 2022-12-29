@@ -26,7 +26,7 @@ void sighandler(int signum)
         exit(EXIT_SUCCESS);
     }
 }
-int main(int argc, char* argv)
+int main(int argc, char* argv[])
 {
     check_error(signal(SIGUSR1, sighandler)!=SIG_ERR, "signal");
     check_error(signal(SIGUSR2, sighandler)!=SIG_ERR, "signal");
