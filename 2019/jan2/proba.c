@@ -41,6 +41,9 @@ int main(int argc, char* argv[])
     scanf("%d", &n);
     ulazni->arrayLen=n;
     for(int i=0;i<n;i++)scanf("%d", &ulazni->array[i]);
+    scanf("%d", &n);
+    izlazni->arrayLen = n;
+    for(int i=0;i<n;i++)scanf("%d", &izlazni->array[i]);
     check_error(sem_post(&ulazni->inDataReady)!=-1, "sem_post");
     check_error(sem_wait(&izlazni->inDataReady)!=-1, "sem_wait");
     for(unsigned i=0;i<izlazni->arrayLen;i++)printf("%d ", izlazni->array[i]);
