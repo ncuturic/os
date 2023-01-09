@@ -22,19 +22,15 @@ typedef struct
 int brJedinica(int x)
 {
     int cnt = 0;
-    while(x)
-    {
-        if(x%2==1)cnt++;
-        x/=2;
-    }
+    for(;x;x/=2)if(x%2==1)cnt++;
     return cnt;
 }
 int main(int argc, char* argv[])
 {
     check_error(argc==3, "argumenti");
-    int ulazFd = shm_open(argv[1], O_RDWR, 0600);
+    int ulazFd = shm_open(argv[1], O_RDWR, 0);
     check_error(ulazFd!=-1, "shm_open");
-    int izlazFd = shm_open(argv[2], O_RDWR | O_CREAT, 0600);
+    int izlazFd = shm_open(argv[2], O_RDWR, 0);
     check_error(izlazFd!=-1, "shm_open");
     struct stat fileinfo;
     check_error(fstat(ulazFd, &fileinfo)!=-1, "stat");
@@ -49,7 +45,7 @@ int main(int argc, char* argv[])
     close(izlazFd);
     int cnt = 0;
     check_error(sem_wait(&ulazni->inDataReady)!=-1, "sem_wait");
-    for(int i=0;i<ulazni->arrayLen;i++)
+    for(unsigned i=0;i<ulazni->arrayLen;i++)
     {
         if(brJedinica(ulazni->array[i])>=4)
         {

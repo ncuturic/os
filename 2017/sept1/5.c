@@ -1,4 +1,3 @@
-//Prolazi samo 20%
 #include<stdio.h>
 #include<stdlib.h>
 #include<semaphore.h>
@@ -35,9 +34,9 @@ int main(int argc, char* argv[])
     OsInputData* data = (OsInputData*)mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     check_error(data!=MAP_FAILED, "mmap");
     close(fd);
-    check_error(sem_wait(&data->inDataReady), "sem_wait");
-    for(int i=0;i<data->arrayLen;i++)if(stepenTrojke(data->array[i]))printf("%d ", data->array[i]);
+    check_error(sem_wait(&data->inDataReady)!=-1, "sem_wait");
+    for(unsigned i=0;i<data->arrayLen;i++)if(stepenTrojke(data->array[i]))printf("%d ", data->array[i]);
     printf("\n");
-    check_error(munmap(data, size), "munmap");
+    check_error(munmap(data, size)!=-1, "munmap");
     exit(EXIT_SUCCESS);
 }

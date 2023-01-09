@@ -43,11 +43,11 @@ int main(int argc, char* argv[])
     for(int i=0;i<n;i++)scanf("%d", &ulazni->array[i]);
     check_error(sem_post(&ulazni->inDataReady)!=-1, "sem_post");
     check_error(sem_wait(&izlazni->inDataReady)!=-1, "sem_wait");
-    for(int i=0;i<izlazni->arrayLen;i++)printf("%d ", izlazni->array[i]);
+    for(unsigned i=0;i<izlazni->arrayLen;i++)printf("%d ", izlazni->array[i]);
     printf("\n");
     check_error(munmap(ulazni, sizeof(OsData))!=-1, "munmap");
     check_error(munmap(izlazni, sizeof(OsData))!=-1, "munmap");
-    sleep(10);
+    sleep(30);
     check_error(shm_unlink(argv[1])!=-1, "unlink");
     check_error(shm_unlink(argv[2])!=-1, "unlink");
     exit(EXIT_SUCCESS);

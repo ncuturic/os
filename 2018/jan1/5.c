@@ -1,4 +1,3 @@
-//Prolazi samo 20%
 #include<stdio.h>
 #include<stdlib.h>
 #include<sys/types.h>
@@ -17,9 +16,9 @@
         }\
     }while(0)
 typedef struct {
-sem_t inDataReady;
-sem_t dataProcessed;
-char str[ARRAY_MAX];
+    sem_t inDataReady;
+    sem_t dataProcessed;
+    char str[ARRAY_MAX];
 }OsInputData;
 int main(int argc, char* argv[])
 {
@@ -37,8 +36,9 @@ int main(int argc, char* argv[])
     for(int i=0;i<n;i++)
     {
         if(isupper(data->str[i]))data->str[i]=tolower(data->str[i]);
-        if(islower(data->str[i]))data->str[i]=toupper(data->str[i]);
+        else if(islower(data->str[i]))data->str[i]=toupper(data->str[i]);
     }
+    printf("%s\n", data->str);
     check_error(sem_post(&(data->dataProcessed))!=-1, "sem_post");
     check_error(munmap(data, size)!=-1, "munmap");
     exit(EXIT_SUCCESS);
