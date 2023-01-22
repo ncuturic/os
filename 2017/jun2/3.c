@@ -32,8 +32,9 @@ int main(int argc, char* argv[])
             lock.l_start = 0;
             lock.l_len = strlen(rec);
             lock.l_whence = SEEK_CUR;
-            int res = fcntl(fd, F_SETLK, &lock);
-            if(res==-1)
+	    errno = 0;
+            int ret = fcntl(fd, F_SETLK, &lock);
+            if(ret==-1)
             {
                 check_error((errno==EAGAIN || errno==EACCES), "fcntl");
                 cnt++;
