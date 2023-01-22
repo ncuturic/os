@@ -1,5 +1,4 @@
 //Ne radi
-#define _POSIX_C_SOURCE 2
 #include<stdio.h>
 #include<stdlib.h>
 #include<errno.h>
@@ -16,6 +15,7 @@
             exit(EXIT_FAILURE);\
         }\
     }while(0)
+#define MAXS 4096
 int main(int argc, char* argv[])
 {
     check_error(argc>1, "argumenti");
@@ -26,40 +26,40 @@ int main(int argc, char* argv[])
     {
         pollK[i].fd = open(argv[i+1], O_RDONLY | O_NONBLOCK);
         check_error(pollK[i].fd!=-1, "open");
-        pollK[i].events = POLLIN;
+        pollK[i].events = POLLIN | POLLERR | POLLHUP;
     }
     int activeFifos = numFifos;
     int max = INT_MIN;
     int idx = 0;
     while(activeFifos)
     {
-        printf("%d\n", activeFifos);
         check_error(poll(pollK, numFifos, -1)!=-1, "poll");
         for(int i=0;i<numFifos;i++)
         {
             if(pollK[i].revents & POLLIN)
             {
-                FILE* ulaz = fdopen(pollK[i].fd, "r");
-                check_error(ulaz!=NULL, "fdopen");
-                int x=0;
-                while(fscanf(ulaz, "%d", &x)!=EOF)
+                pollK[i].revents = 0;
+                char buff[MAXS];
+                int read_bytes = 0;
+                check_error((read_bytes = read(pollK[i].fd, buff, MAXS))!=-1, "read");
+                buff[read_bytes] = 0;
+                char* newBuff = strtok(buff, " ");
+                while(newBuff!=NULL)
                 {
-                    printf("%d ", x);
+                    int x = atoi(newBuff);
                     if(x>max)
                     {
                         max = x;
                         idx = i;
                     }
+                    newBuff = strtok(NULL, " ");
                 }
-                printf("\n");
-                fclose(ulaz);
-                pollK[i].revents = 0;
             }
             else if(pollK[i].revents & (POLLHUP | POLLERR))
             {
+                pollK[i].revents = 0;
                 activeFifos--;
                 close(pollK[i].fd);
-                pollK[i].revents = 0;
             }
         }
     }
